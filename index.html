@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getnet Elevator and Escalator Solution</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts: Playfair Display for Classic feel, Inter for Modern feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gold: #c5a059;
+            --deep-black: #1a1a1a;
+            --classic-white: #f8f9fa;
+            --brand-blue: #1e4b7a;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--classic-white);
+            color: var(--deep-black);
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, .classic-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .gold-gradient {
+            background: linear-gradient(135deg, #c5a059 0%, #ecd29a 100%);
+        }
+
+        .hero-overlay {
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-gold);
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+            background: #e5e7eb;
+            aspect-ratio: 4/5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+        }
+
+        .gallery-item img, .gallery-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-label {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(197, 160, 89, 0.9);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        footer {
+            background-color: var(--deep-black);
+            color: white;
+        }
+
+        /* Modal for images */
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Logo Styling to match provided image */
+        .brand-logo-svg {
+            height: 60px;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <!-- SVG Re-creation of the provided logo -->
+                    <svg class="brand-logo-svg" viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Background Shape if needed, but keeping it transparent for nav -->
+                        <g transform="translate(10, 5)">
+                            <!-- Upper Chevron -->
+                            <path d="M70 15 L150 0 L230 15" stroke="#1e4b7a" stroke-width="2" fill="none" />
+                            
+                            <!-- Helmet & Gear Icon -->
+                            <g transform="translate(130, 20) scale(0.8)">
+                                <path fill="#1e4b7a" d="M25 0C11.19 0 0 11.19 0 25C0 26.38 0.11 27.74 0.33 29.06L5.17 29.06C5.06 27.74 5 26.38 5 25C5 13.95 13.95 5 25 5C36.05 5 45 13.95 45 25C45 26.38 44.94 27.74 44.83 29.06L49.67 29.06C49.89 27.74 50 26.38 50 25C50 11.19 38.81 0 25 0Z"/>
+                                <path fill="#1e4b7a" d="M25 10C16.71 10 10 16.71 10 25V30H40V25C40 16.71 33.29 10 25 10ZM25 15C27.76 15 30 17.24 30 20C30 22.76 27.76 25 25 25C22.24 25 20 22.76 20 20C20 17.24 22.24 15 25 15Z"/>
+                                <path fill="#1e4b7a" d="M15 32L18 38L25 36L32 38L35 32H15Z"/>
+                            </g>
+
+                            <!-- GETNET Text -->
+                            <text x="150" y="85" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="44" letter-spacing="1" fill="#1e4b7a">GETNET</text>
+                            
+                            <!-- Subtitle -->
+                            <text x="150" y="102" text-anchor="middle" font-family="Inter, sans-serif" font-weight="400" font-size="10" letter-spacing="2" fill="#1e4b7a">ELEVATOR & ESCALATER SOLUTION</text>
+                            
+                            <!-- Lower Chevron -->
+                            <path d="M70 105 L150 120 L230 105" stroke="#1e4b7a" stroke-width="2" fill="none" />
+                        </g>
+                    </svg>
+                </div>
+                
+                <div class="hidden md:flex space-x-8 font-medium text-sm uppercase tracking-widest">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#services" class="nav-link">Services</a>
+                    <a href="#gallery" class="nav-link">Gallery</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="p-2">
+                        <i data-lucide="menu"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-neutral-900">
+            <img src="https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&q=80" alt="Elevator Shaft" class="w-full h-full object-cover opacity-50">
+        </div>
+        <div class="relative z-10 text-center px-4 max-w-4xl">
+            <h1 class="text-5xl md:text-7xl text-white mb-6 leading-tight">Elevating Standards, One Floor at a Time.</h1>
+            <p class="text-xl text-gray-200 mb-8 font-light italic">Expert installation and maintenance of elevators and escalators with premium engineering.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#contact" class="px-8 py-4 gold-gradient text-white rounded shadow-lg font-semibold hover:opacity-90 transition uppercase tracking-widest">Get a Quote</a>
+                <a href="#gallery" class="px-8 py-4 border border-white text-white rounded font-semibold hover:bg-white/10 transition uppercase tracking-widest">View Our Work</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Our Expertise</h2>
+                <div class="w-24 h-1 gold-gradient mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+                <div class="p-8 border border-gray-100 rounded-xl shadow-sm hover:shadow-xl transition-shadow bg-neutral-50">
+                    <div class="w-12 h-12 bg-[#c5a059]/10 rounded-full flex items-center justify-center mb-6 text-[#c5a059]">
+                        <i data-lucide="settings"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Installation</h3>
+                    <p class="text-gray-600">Precision installation of modern elevator systems for residential, commercial, and industrial buildings.</p>
+                </div>
+
+                <div class="p-8 border border-gray-100 rounded-xl shadow-sm hover:shadow-xl transition-shadow bg-neutral-50">
+                    <div class="w-12 h-12 bg-[#c5a059]/10 rounded-full flex items-center justify-center mb-6 text-[#c5a059]">
+                        <i data-lucide="shield-check"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Maintenance</h3>
+                    <p class="text-gray-600">Routine checks and preventive measures to ensure 100% uptime and safety of your vertical transport systems.</p>
+                </div>
+
+                <div class="p-8 border border-gray-100 rounded-xl shadow-sm hover:shadow-xl transition-shadow bg-neutral-50">
+                    <div class="w-12 h-12 bg-[#c5a059]/10 rounded-full flex items-center justify-center mb-6 text-[#c5a059]">
+                        <i data-lucide="wrench"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Emergency Repair</h3>
+                    <p class="text-gray-600">24/7 rapid response team for escalator and elevator repairs across all major brands.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-24 bg-neutral-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Work Portfolio</h2>
+                <p class="text-gray-500 italic">Showcasing our precision and quality</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Videos -->
+                <div class="gallery-item cursor-pointer video-container">
+                    <span class="video-label">Video 1</span>
+                    <video muted loop playsinline autoplay class="hover-video">
+                        <source src="video (1).mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="gallery-item cursor-pointer video-container">
+                    <span class="video-label">Video 2</span>
+                    <video muted loop playsinline autoplay class="hover-video">
+                        <source src="video (2).mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <!-- Photos (22 Photos) -->
+                <div id="photo-grid-insertion" class="contents"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-16">
+                <div>
+                    <h2 class="text-4xl font-bold mb-8">Get In Touch</h2>
+                    <p class="text-gray-600 mb-12">Whether you are building a new tower or need reliable maintenance for your existing equipment, we are here to help.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 flex items-center justify-center bg-[#c5a059] text-white rounded-full">
+                                <i data-lucide="phone"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Phone Numbers</p>
+                                <p class="font-bold">+251 911 278 286</p>
+                                <p class="font-bold">+251 912 951 959</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 flex items-center justify-center bg-[#c5a059] text-white rounded-full">
+                                <i data-lucide="mail"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Email Address</p>
+                                <a href="mailto:getnetwasihun75@gmail.com" class="font-bold hover:text-[#c5a059]">getnetwasihun75@gmail.com</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 flex items-center justify-center bg-black text-white rounded-full">
+                                <i data-lucide="music-2"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">TikTok</p>
+                                <a href="https://www.tiktok.com/@elevatorescalatorsolutio" target="_blank" class="font-bold hover:text-[#c5a059]">GETNET (@elevatorescalatorsolutio)</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-neutral-50 p-8 rounded-2xl shadow-inner border border-gray-100">
+                    <form id="contactForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Your Name</label>
+                            <input type="text" class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#c5a059] outline-none" placeholder="John Doe">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Email</label>
+                            <input type="email" class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#c5a059] outline-none" placeholder="john@example.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Subject</label>
+                            <select class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#c5a059] outline-none">
+                                <option>New Installation</option>
+                                <option>Maintenance Request</option>
+                                <option>Emergency Repair</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Message</label>
+                            <textarea rows="4" class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#c5a059] outline-none" placeholder="How can we help you?"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-4 gold-gradient text-white rounded-lg font-bold uppercase tracking-widest hover:opacity-90 transition">Send Message</button>
+                    </form>
+                    <div id="formSuccess" class="hidden mt-4 p-4 bg-green-100 text-green-700 rounded-lg text-center font-medium">
+                        Message sent successfully! We will contact you shortly.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex flex-col items-center">
+                <!-- White version of logo for dark footer -->
+                <svg class="h-24 w-auto mb-4" viewBox="0 0 300 130" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(10, 5)">
+                        <path d="M70 15 L150 0 L230 15" stroke="white" stroke-width="2" fill="none" />
+                        <g transform="translate(130, 20) scale(0.8)">
+                            <path fill="white" d="M25 0C11.19 0 0 11.19 0 25C0 26.38 0.11 27.74 0.33 29.06L5.17 29.06C5.06 27.74 5 26.38 5 25C5 13.95 13.95 5 25 5C36.05 5 45 13.95 45 25C45 26.38 44.94 27.74 44.83 29.06L49.67 29.06C49.89 27.74 50 26.38 50 25C50 11.19 38.81 0 25 0Z"/>
+                            <path fill="white" d="M25 10C16.71 10 10 16.71 10 25V30H40V25C40 16.71 33.29 10 25 10ZM25 15C27.76 15 30 17.24 30 20C30 22.76 27.76 25 25 25C22.24 25 20 22.76 20 20C20 17.24 22.24 15 25 15Z"/>
+                            <path fill="white" d="M15 32L18 38L25 36L32 38L35 32H15Z"/>
+                        </g>
+                        <text x="150" y="85" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="44" letter-spacing="1" fill="white">GETNET</text>
+                        <text x="150" y="102" text-anchor="middle" font-family="Inter, sans-serif" font-weight="400" font-size="10" letter-spacing="2" fill="white">ELEVATOR & ESCALATER SOLUTION</text>
+                        <path d="M70 105 L150 120 L230 105" stroke="white" stroke-width="2" fill="none" />
+                    </g>
+                </svg>
+                <p class="text-gray-500 max-w-md mx-auto mb-8 italic">Your trusted partner for vertical transportation engineering.</p>
+                <div class="flex gap-6 mb-8 text-gray-400">
+                    <a href="#" class="hover:text-[#c5a059]"><i data-lucide="facebook"></i></a>
+                    <a href="https://www.tiktok.com/@elevatorescalatorsolutio" target="_blank" class="hover:text-[#c5a059]"><i data-lucide="music-2"></i></a>
+                    <a href="#" class="hover:text-[#c5a059]"><i data-lucide="instagram"></i></a>
+                </div>
+                <p class="text-xs text-gray-600">&copy; 2024 Getnet Elevator and Escalator Solution. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal -->
+    <div id="modal">
+        <div class="relative max-w-4xl w-full p-4 flex flex-col items-center">
+            <button id="modalClose" class="absolute -top-12 right-4 text-white text-4xl">&times;</button>
+            <div id="modalContent" class="w-full h-full flex justify-center">
+                <!-- Content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Dynamically inject photos
+        const photoGrid = document.getElementById('photo-grid-insertion');
+        for(let i=1; i<=22; i++) {
+            const div = document.createElement('div');
+            div.className = 'gallery-item cursor-pointer';
+            div.innerHTML = `
+                <img src="photo (${i}).jpg" alt="Getnet Elevator Project ${i}" onerror="this.src='https://via.placeholder.com/400x500?text=Photo+(${i})'">
+            `;
+            photoGrid.appendChild(div);
+        }
+
+        // Safe Video Playback
+        document.querySelectorAll('.hover-video').forEach(video => {
+            video.play().catch(e => {});
+
+            video.parentElement.addEventListener('mouseenter', () => {
+                video.play().catch(() => {});
+            });
+        });
+
+        // Contact Form Logic
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            this.classList.add('hidden');
+            document.getElementById('formSuccess').classList.remove('hidden');
+        });
+
+        // Gallery Modal Logic
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modalContent');
+        const modalClose = document.getElementById('modalClose');
+
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const media = item.querySelector('img, video');
+                if (!media) return;
+                
+                modalContent.innerHTML = '';
+                const clone = media.cloneNode(true);
+                
+                if(clone.tagName === 'VIDEO') {
+                    clone.setAttribute('controls', '');
+                    clone.muted = false;
+                    clone.play().catch(() => {});
+                }
+                modalContent.appendChild(clone);
+                modal.style.display = 'flex';
+            });
+        });
+
+        modalClose.onclick = () => {
+            modal.style.display = 'none';
+            modalContent.innerHTML = '';
+        };
+
+        window.onclick = (e) => {
+            if (e.target == modal) {
+                modal.style.display = 'none';
+                modalContent.innerHTML = '';
+            }
+        };
+    </script>
+</body>
+</html>
