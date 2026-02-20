@@ -145,6 +145,12 @@
             color: var(--brand-gold);
             transform: translateX(5px);
         }
+
+        .portfolio-subheading {
+            border-left: 4px solid var(--brand-gold);
+            padding-left: 1rem;
+            margin-bottom: 2rem;
+        }
     </style>
 </head>
 <body>
@@ -164,7 +170,6 @@
                     <a href="#home" class="nav-link">Home</a>
                     <a href="#sale" class="nav-link">For Sale Items</a>
                     <a href="#work" class="nav-link">Portfolio</a>
-                    <a href="#services" class="nav-link">Services</a>
                     <a href="#contact" class="nav-link text-blue-300">Contact Us</a>
                 </div>
 
@@ -183,7 +188,6 @@
                 <a href="#home" class="mobile-nav-link text-white py-2">Home</a>
                 <a href="#sale" class="mobile-nav-link text-white py-2">For Sale Items</a>
                 <a href="#work" class="mobile-nav-link text-white py-2">Portfolio</a>
-                <a href="#services" class="mobile-nav-link text-white py-2">Services</a>
                 <a href="#contact" class="mobile-nav-link text-blue-300 py-2">Contact Us</a>
             </div>
         </div>
@@ -226,12 +230,30 @@
     <section id="work" class="py-32 bg-white">
         <div class="max-w-7xl mx-auto px-4 lg:px-8">
             <div class="text-center mb-24">
-                <span class="text-blue-600 font-black uppercase tracking-[0.4em] text-xs">Our Projects</span>
+                <span class="text-blue-600 font-black uppercase tracking-[0.4em] text-xs">Our Work Portfolio</span>
                 <h2 class="text-4xl md:text-5xl font-bold heading-font section-title mt-4">Engineering Showcase</h2>
             </div>
             
-            <div id="work-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Javascript injection -->
+            <!-- Active Installation Phase -->
+            <div class="mb-20">
+                <div class="portfolio-subheading">
+                    <h3 class="text-2xl font-bold text-blue-900 uppercase tracking-wider">Active Installation Phase</h3>
+                    <p class="text-slate-500 text-sm">On-site execution and rigorous testing of new systems.</p>
+                </div>
+                <div id="active-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Javascript injection -->
+                </div>
+            </div>
+
+            <!-- Completed Projects -->
+            <div>
+                <div class="portfolio-subheading">
+                    <h3 class="text-2xl font-bold text-blue-900 uppercase tracking-wider">Completed Projects</h3>
+                    <p class="text-slate-500 text-sm">Successfully delivered vertical transport solutions across the city.</p>
+                </div>
+                <div id="completed-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Javascript injection -->
+                </div>
             </div>
         </div>
     </section>
@@ -324,28 +346,42 @@
 
         // Content Data
         const saleItems = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 22, 's1']; 
-        const workPhotos = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 28, 29, 30]; 
-        // Updated video file names based on user input
+        
+        // Division logic based on user requirements
+        const activePhotoIds = [11, 14, 15, 16, 18, 20, 21];
+        const allPhotoIds = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 28, 29, 30]; 
+        const completedPhotoIds = allPhotoIds.filter(id => !activePhotoIds.includes(id));
+        
         const workVideos = [1, 2, 3]; 
 
+        // Populate Sale Grid
         const saleGrid = document.getElementById('sale-grid');
         saleItems.forEach((id) => {
             const fileName = typeof id === 'string' ? `photo ${id}.jpg` : `photo (${id}).jpg`;
             saleGrid.appendChild(createCard(fileName, `System Unit G-${id}`, true));
         });
 
-        const workGrid = document.getElementById('work-grid');
+        // Populate Active Installation Grid
+        const activeGrid = document.getElementById('active-grid');
+        // Add videos to active phase
         workVideos.forEach((id) => {
-            // Using updated naming convention video1.mp4, video2.mp4, etc.
-            workGrid.appendChild(createVideoCard(`video${id}.mp4`, `Installation Demo ${id}`));
+            activeGrid.appendChild(createVideoCard(`video${id}.mp4`, `Installation Test`));
         });
-        workPhotos.forEach((id) => {
-            workGrid.appendChild(createCard(`photo (${id}).jpg`, `Completed Project ${id}`, false));
+        // Add specific photos to active phase
+        activePhotoIds.forEach((id) => {
+            activeGrid.appendChild(createCard(`photo (${id}).jpg`, `In-Progress Site`, false, "Installation"));
         });
 
-        function createCard(src, title, isSale) {
+        // Populate Completed Project Grid
+        const completedGrid = document.getElementById('completed-grid');
+        completedPhotoIds.forEach((id) => {
+            completedGrid.appendChild(createCard(`photo (${id}).jpg`, `Delivered Project`, false, "Final Delivery"));
+        });
+
+        function createCard(src, title, isSale, label) {
             const div = document.createElement('div');
             div.className = 'gallery-card cursor-pointer group relative';
+            const displayLabel = isSale ? 'For Sale' : (label || 'Project');
             div.innerHTML = `
                 <div class="image-container relative">
                     ${isSale ? '<span class="badge-sale">For Sale</span>' : ''}
@@ -353,7 +389,7 @@
                     <div class="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/20 transition-all"></div>
                 </div>
                 <div class="p-6">
-                    <h5 class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600 mb-2">${isSale ? 'Item for Sale' : 'Project'}</h5>
+                    <h5 class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600 mb-2">${displayLabel}</h5>
                     <p class="text-sm font-bold uppercase text-slate-900">${title}</p>
                 </div>
             `;
@@ -366,11 +402,11 @@
             div.className = 'gallery-card cursor-pointer group';
             div.innerHTML = `
                 <div class="image-container relative bg-slate-900 flex items-center justify-center">
-                    <span class="absolute top-4 right-4 bg-blue-600 text-white text-[10px] px-3 py-1 rounded-full uppercase font-black z-10">Video</span>
+                    <span class="absolute top-4 right-4 bg-blue-600 text-white text-[10px] px-3 py-1 rounded-full uppercase font-black z-10">Live Feed</span>
                     <i data-lucide="play" class="w-16 h-16 text-white/30 group-hover:text-white transition-all"></i>
                 </div>
                 <div class="p-6">
-                    <h5 class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-500 mb-2">Documentation</h5>
+                    <h5 class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-500 mb-2">Video Report</h5>
                     <p class="text-sm font-bold uppercase text-slate-900">${title}</p>
                 </div>
             `;
@@ -402,17 +438,15 @@
                 source.src = src;
                 source.type = 'video/mp4';
                 
-                // Error handling for the video specifically
                 source.onerror = () => {
-                   modalContent.innerHTML = `<div class="text-white text-center p-10"><i data-lucide="alert-circle" class="mx-auto mb-4 w-12 h-12"></i><p>Video not found: ${src}</p></div>`;
+                   modalContent.innerHTML = `<div class="text-white text-center p-10"><i data-lucide="alert-circle" class="mx-auto mb-4 w-12 h-12"></i><p>Video processing or not found: ${src}</p></div>`;
                    lucide.createIcons();
                 };
 
                 vid.appendChild(source);
                 modalContent.appendChild(vid);
                 
-                vid.play().catch(err => {
-                    console.log("Autoplay blocked or file missing.");
+                vid.play().catch(() => {
                     vid.muted = false; 
                 });
             }
