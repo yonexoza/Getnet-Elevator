@@ -151,6 +151,20 @@
             padding-left: 1rem;
             margin-bottom: 2rem;
         }
+
+        .expertise-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 1.5rem;
+            border-bottom: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .expertise-card:hover {
+            border-bottom-color: var(--brand-gold);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
     </style>
 </head>
 <body>
@@ -168,6 +182,7 @@
                 
                 <div class="hidden lg:flex space-x-8 text-xs uppercase tracking-[0.2em]">
                     <a href="#home" class="nav-link">Home</a>
+                    <a href="#expertise" class="nav-link">Expertise</a>
                     <a href="#sale" class="nav-link">For Sale Items</a>
                     <a href="#work" class="nav-link">Portfolio</a>
                     <a href="#contact" class="nav-link text-blue-300">Contact Us</a>
@@ -186,6 +201,7 @@
         <div id="mobile-menu" class="lg:hidden absolute top-20 left-0 w-full bg-[#1e4b7a] border-t border-blue-900 shadow-2xl py-8 px-4">
             <div class="flex flex-col space-y-6 text-center uppercase tracking-widest text-sm font-bold">
                 <a href="#home" class="mobile-nav-link text-white py-2">Home</a>
+                <a href="#expertise" class="mobile-nav-link text-white py-2">Expertise</a>
                 <a href="#sale" class="mobile-nav-link text-white py-2">For Sale Items</a>
                 <a href="#work" class="mobile-nav-link text-white py-2">Portfolio</a>
                 <a href="#contact" class="mobile-nav-link text-blue-300 py-2">Contact Us</a>
@@ -208,6 +224,39 @@
             <div class="flex flex-wrap gap-6">
                 <a href="#sale" class="bg-blue-600 text-white px-12 py-5 rounded-full text-xs font-black uppercase tracking-widest hover:bg-blue-700 hover:scale-105 transition-all shadow-xl shadow-blue-900/20">For Sale Items</a>
                 <a href="#contact" class="bg-white text-blue-900 px-12 py-5 rounded-full text-xs font-black uppercase tracking-widest hover:bg-blue-50 transition-all shadow-lg">Free Consultation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expertise Section -->
+    <section id="expertise" class="py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl md:text-5xl font-bold heading-font section-title !pb-6">Our Expertise</h2>
+                <p class="text-slate-500 mt-4 max-w-2xl mx-auto text-lg">Comprehensive solutions tailored to the specific needs of modern Ethiopian architecture.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="expertise-card">
+                    <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-8">
+                        <i data-lucide="settings-2" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-blue-900">Installation</h3>
+                    <p class="text-slate-600 leading-relaxed">Expert installation of high-speed elevators and heavy-duty escalators using world-class safety protocols and precision engineering.</p>
+                </div>
+                <div class="expertise-card">
+                    <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-8">
+                        <i data-lucide="shield-check" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-blue-900">Maintenance</h3>
+                    <p class="text-slate-600 leading-relaxed">24/7 technical support and proactive maintenance schedules to ensure zero downtime and maximum passenger safety.</p>
+                </div>
+                <div class="expertise-card">
+                    <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-8">
+                        <i data-lucide="zap" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-blue-900">Modernization</h3>
+                    <p class="text-slate-600 leading-relaxed">Upgrade your existing systems with the latest energy-efficient controllers, aesthetic cab designs, and touchless technology.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -267,15 +316,18 @@
                     <p class="text-slate-300 text-lg mb-12 leading-relaxed">We provide end-to-end consulting for high-rise buildings, malls, and residential complexes.</p>
                     
                     <div class="space-y-10">
-                        <a href="tel:+251911278286" class="flex items-center gap-8 group contact-link">
-                            <div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-blue-500/10 text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all">
+                        <div class="flex items-start gap-8 group">
+                            <div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-blue-500/10 text-blue-400">
                                 <i data-lucide="phone" class="w-6 h-6"></i>
                             </div>
                             <div>
-                                <p class="text-xs uppercase tracking-widest text-slate-500 font-bold mb-1">Call Us</p>
-                                <span class="text-xl font-bold">+251 911 278 286</span>
+                                <p class="text-xs uppercase tracking-widest text-slate-500 font-bold mb-2">Call Us</p>
+                                <div class="flex flex-col gap-2">
+                                    <a href="tel:+251911278286" class="text-xl font-bold hover:text-brand-gold transition-colors">+251 911 278 286</a>
+                                    <a href="tel:+251912951959" class="text-xl font-bold hover:text-brand-gold transition-colors">+251 912 951 959</a>
+                                </div>
                             </div>
-                        </a>
+                        </div>
 
                         <a href="mailto:getnetwasihun75@gmail.com" class="flex items-center gap-8 group contact-link">
                             <div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-blue-500/10 text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all">
